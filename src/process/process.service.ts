@@ -87,8 +87,6 @@ export class ProcessService {
           throw new NotFoundException('Process not found');
         }
     
-        console.log(process)
-        console.log(processesIds)
         const subprocesses = await this.processesRepository.find({
           where: { id: In(processesIds) },
         });
