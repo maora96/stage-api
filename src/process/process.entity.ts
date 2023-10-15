@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 import { EditProcessDTO } from './dtos/edit-process.dto';
+import { Department } from 'src/department/department.entity';
 
 @Entity({ name: 'processes' })
 export class Process {
@@ -25,9 +26,6 @@ export class Process {
   @Column({ type: 'text', nullable: true })
   cover: string | null;
 
-  @Column({ type: 'text',  array: true })
-  department: string[];
-
   @CreateDateColumn({ type: 'timestamp' })
   createdAt!: Date;
 
@@ -37,11 +35,16 @@ export class Process {
   @JoinTable()
   processes: Process[] | null;
 
+  
+  @ManyToMany(() => Department)
+  @JoinColumn()
+  @JoinTable()
+  departments: Department[] | null;
+
   constructor(
     name: string,
     description: string,
     cover: string | null,
-    department: string[],
     createdAt?: Date | null,
     id?: string,
   ) {
@@ -49,7 +52,6 @@ export class Process {
     this.name = name;
     this.description = description;
     this.cover = cover;
-    this.department = department;
     this.createdAt = createdAt ?? new Date();
   }
 
@@ -67,6 +69,20 @@ export class Process {
       for (const process of processes) {
         if (!existingProcessesIds.includes(process.id)) {
           this.processes.push(process);
+        }
+      }
+    }
+  }
+
+  addDepartments(departments: Department[]) {
+    if (this.departments.length === 0) {
+      this.departments = departments;
+    } else {
+      const existingDepartmentsIds = this.departments.map((department: Department) => department.id);
+      
+      for (const department of departments) {
+        if (!existingDepartmentsIds.includes(department.id)) {
+          this.departments.push(department);
         }
       }
     }

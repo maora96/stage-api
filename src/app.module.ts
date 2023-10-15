@@ -4,13 +4,16 @@ import { ProcessModule } from './process/process.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Process } from './process/process.entity';
 import { APP_PIPE } from '@nestjs/core';
+import { DepartmentController } from './department/department.controller';
+import { DepartmentModule } from './department/department.module';
+import { Department } from './department/department.entity';
 @Module({
   imports: [
     ConfigModule.forRoot(),
     ProcessModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
-      entities: [Process],
+      entities: [Process, Department],
       synchronize: true,
 
       username: process.env.PGUSER,
@@ -23,6 +26,7 @@ import { APP_PIPE } from '@nestjs/core';
       //   ca: process.env.CACERT,
       // },
     }),
+    DepartmentModule,
   ],
   controllers: [],
   providers: [ {

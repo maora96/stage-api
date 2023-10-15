@@ -5,7 +5,7 @@ import {
   } from 'class-validator';
 
   
-  export class CreateProcessDTO {
+  export class CreateDepartmentDTO {
     @IsString({ message: 'name must be a string.' })
     @IsNotEmpty()
     name: string;
