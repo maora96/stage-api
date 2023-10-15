@@ -1,8 +1,8 @@
 import {
     IsArray,
     IsNotEmpty,
+    IsOptional,
     IsString,
-    isArray,
   } from 'class-validator';
 
   
@@ -15,6 +15,8 @@ import {
     @IsNotEmpty()
     description: string;
 
+    @IsString({message: "cover must be a string"})
+    @IsOptional()
     cover: string | null;
 
     @IsNotEmpty()

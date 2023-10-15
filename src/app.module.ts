@@ -1,8 +1,9 @@
-import { Module } from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ProcessModule } from './process/process.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Process } from './process/process.entity';
+import { APP_PIPE } from '@nestjs/core';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -24,6 +25,13 @@ import { Process } from './process/process.entity';
     }),
   ],
   controllers: [],
-  providers: [],
+  providers: [ {
+    provide: APP_PIPE,
+    useValue: new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  },],
 })
 export class AppModule {}
