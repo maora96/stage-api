@@ -10,18 +10,14 @@ import {
 import { ProcessService } from './process.service';
 import { EditProcessDTO } from './dtos/edit-process.dto';
 import { CreateProcessDTO } from './dtos/create-process.dto';
+import { EditProcessesDTO } from './dtos/edit-processes.dto';
 
 @Controller('process')
 export class ProcessController {
     constructor(private processService: ProcessService) { }
     
-    @Get(':department')
-    async getManyByDepartment(@Param('department') department: string) {
-        const content = await this.processService.getManyByDepartment(department);
-        return { result: content };
-    }
 
-    @Get('/single/:id')
+    @Get('/:id')
     async getOne(@Param('id') id: string) {
         const content = await this.processService.getOne(id);
         return { result: content };
@@ -48,17 +44,16 @@ export class ProcessController {
     }
 
     @Patch('/subprocesses/:id')
-    async editSubprocesses(@Param('id') id: string, @Body() body: EditStoriesDTO) {
+    async editSubprocesses(@Param('id') id: string, @Body() body: EditProcessesDTO) {
         const { processesIds } = body;
         const content = await this.processService.editProcesses(id, processesIds);
 
         return content;
     }
 
-    @UseGuards(AuthGuard)
     @Delete(':id')
     async delete(@Param('id') id: string) {
-        const content = await this.charactersService.delete(id);
+        const content = await this.processService.delete(id);
 
         return { result: content };
     }

@@ -6,6 +6,7 @@ import {
   ManyToMany,
   JoinColumn,
   JoinTable,
+  ManyToOne,
 } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 import { EditProcessDTO } from './dtos/edit-process.dto';
@@ -24,6 +25,9 @@ export class Process {
   @Column({ type: 'text', nullable: true })
   cover: string | null;
 
+  @Column({ type: 'text',  array: true })
+  department: string[];
+
   @CreateDateColumn({ type: 'timestamp' })
   createdAt!: Date;
 
@@ -37,6 +41,7 @@ export class Process {
     name: string,
     description: string,
     cover: string | null,
+    department: string[],
     createdAt?: Date | null,
     id?: string,
   ) {
@@ -44,6 +49,7 @@ export class Process {
     this.name = name;
     this.description = description;
     this.cover = cover;
+    this.department = department;
     this.createdAt = createdAt ?? new Date();
   }
 

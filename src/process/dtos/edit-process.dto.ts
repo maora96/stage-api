@@ -1,4 +1,6 @@
 import {
+    IsArray,
+    IsNotEmpty,
     IsOptional,
     IsString,
   } from 'class-validator';
@@ -14,4 +16,8 @@ import {
 
     @IsOptional()
     cover: string | null;
+
+    @IsNotEmpty()
+    @IsArray({ message: 'departments must be an array of strings.' })
+    departments: string[];
   }
