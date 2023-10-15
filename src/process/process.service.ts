@@ -77,18 +77,20 @@ export class ProcessService {
         return this.processesRepository.remove(process);
       }
     
-      async editProcesses(id: string, processesId: string[]) {
+      async editProcesses(id: string, processesIds: string[]) {
         const process = await this.processesRepository.findOne({
           where: { id },
-          relations: ['stories'],
+          relations: ['processes'],
         });
     
         if (!process) {
           throw new NotFoundException('Process not found');
         }
     
+        console.log(process)
+        console.log(processesIds)
         const subprocesses = await this.processesRepository.find({
-          where: { id: In(processesId) },
+          where: { id: In(processesIds) },
         });
     
         if (!subprocesses) {
