@@ -29,13 +29,11 @@ export class Process {
   @CreateDateColumn({ type: 'timestamp' })
   createdAt!: Date;
 
-
   @ManyToMany(() => Process)
   @JoinColumn()
   @JoinTable()
   processes: Process[] | null;
 
-  
   @ManyToMany(() => Department)
   @JoinColumn()
   @JoinTable()
@@ -65,7 +63,9 @@ export class Process {
     if (this.processes.length === 0) {
       this.processes = processes;
     } else {
-      const existingProcessesIds = this.processes.map((process: Process) => process.id);
+      const existingProcessesIds = this.processes.map(
+        (process: Process) => process.id,
+      );
       for (const process of processes) {
         if (!existingProcessesIds.includes(process.id)) {
           this.processes.push(process);
@@ -78,8 +78,10 @@ export class Process {
     if (this.departments.length === 0) {
       this.departments = departments;
     } else {
-      const existingDepartmentsIds = this.departments.map((department: Department) => department.id);
-      
+      const existingDepartmentsIds = this.departments.map(
+        (department: Department) => department.id,
+      );
+
       for (const department of departments) {
         if (!existingDepartmentsIds.includes(department.id)) {
           this.departments.push(department);
@@ -87,5 +89,4 @@ export class Process {
       }
     }
   }
-
 }
