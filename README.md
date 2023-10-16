@@ -48,12 +48,11 @@ $ npm run start:prod
 ## Using docker
 
 ```bash
+# building an image
 $ docker build -t stage-api .
 
+# running a container
 $ docker run -p 3000:300 -d stage-api
-
-# production mode
-$ npm run start:prod
 ```
 
 ## Test
