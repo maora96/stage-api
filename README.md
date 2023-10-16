@@ -24,7 +24,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+API for Stage Consulting's case study.
 
 ## Installation
 
@@ -40,6 +40,17 @@ $ npm run start
 
 # watch mode
 $ npm run start:dev
+
+# production mode
+$ npm run start:prod
+```
+
+## Using docker
+
+```bash
+$ docker build -t stage-api .
+
+$ docker run -p 3000:300 -d stage-api
 
 # production mode
 $ npm run start:prod
